@@ -12,16 +12,12 @@ const emits = defineEmits(["handleInput", "handleIncrement"]);
 const formInput = ref(0);
 
 const inputData = () => {
-  // console.log(formInput);
-  // if (formInput.value === "") {
-  //   return (formInput.value = 0);
-  // }
   return emits("handleInput", data.indexItem, formInput.value); //this will trigger handleInput function in app.vue for update data
 };
 
 const increment = (event) => {
   event.preventDefault();
-  emits("handleIncrement", data.indexItem); //this will trigger handleInput function in app.vue for update data
+  emits("handleIncrement", data.indexItem); //this will trigger handleIncrement function in app.vue for update data
 };
 </script>
 

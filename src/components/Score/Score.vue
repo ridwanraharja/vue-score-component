@@ -4,18 +4,6 @@ let data = defineProps({
   scoreLength: Number,
   score: Number,
 });
-// import { ref } from "vue";
-// import { watch } from "vue";
-
-// const target = ref(data.score);
-// watch(target, (value) => {
-//   if (value) {
-//     target.value.classList.add("animate__animated", "animate__heartBeat");
-//     target.value.addEventListener("animationend", () => {
-//       target.value.classList.remove("animate__animated", "animate__heartBeat");
-//     });
-//   }
-// });
 </script>
 
 <template>
@@ -32,7 +20,11 @@ let data = defineProps({
         ></b-progress>
         <i
           ref="target"
-          class="bi bi-star-fill star animate__animated animate__heartBeat"
+          class="bi bi-star-fill star"
+          :class="{
+            'animate__animated animate__heartBeat':
+              data.score == data.scoreLength,
+          }"
         ></i>
       </div>
       <div class="score">
