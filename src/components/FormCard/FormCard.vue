@@ -8,25 +8,36 @@ let data = defineProps({
 
 import { ref, defineEmits } from "vue";
 
-const emits = defineEmits(["handleSubmit"]);
+const emits = defineEmits(["handleInput", "handleIncrement"]);
+const formInput = ref(0);
 
-const formInput = ref("");
+const inputData = () => {
+  // console.log(formInput);
+  // if (formInput.value === "") {
+  //   return (formInput.value = 0);
+  // }
+  return emits("handleInput", data.indexItem, formInput.value); //this will trigger handleInput function in app.vue for update data
+};
 
-const submitData = (event) => {
+const increment = (event) => {
   event.preventDefault();
-  emits("handleSubmit", data.indexItem, formInput.value); //this will trigger handleSubmit function in app.vue for update data
-  formInput.value = ""; // Reset the input field after submission
+  emits("handleIncrement", data.indexItem); //this will trigger handleInput function in app.vue for update data
 };
 </script>
 
 <template>
   <div class="card">
     <div class="card-body">
-      <form @submit.prevent="submitData" class="form-group mb-2">
+      <form @submit.prevent="inputData" class="form-group mb-2">
         <h3>{{ data.title }}</h3>
         <label>{{ data.description }}</label>
-        <input type="number" class="form-control" v-model="formInput" />
-        <button type="submit" class="btn btn-secondary" @click="submitData">
+        <input
+          type="number"
+          class="form-control"
+          v-model="formInput"
+          @input="inputData"
+        />
+        <button type="submit" class="btn btn-secondary mt-3" @click="increment">
           Check
         </button>
       </form>

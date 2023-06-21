@@ -6,11 +6,13 @@ import { ref } from "vue";
 const scoreItems = ref([
   {
     title: "Multiple Choice",
-    scoreLength: 4,
+    scoreLength: 0,
+    score: 0,
   },
   {
     title: "True or False",
-    scoreLength: 5,
+    scoreLength: 0,
+    score: 0,
   },
 ]);
 
@@ -18,19 +20,32 @@ const formItems = ref([
   {
     title: "Multiple Choice",
     description: "How many questions",
-    manyItems: null,
+    manyItems: 0,
   },
   {
     title: "True or False",
     description: "How many questions",
-    manyItems: null,
+    manyItems: 0,
   },
 ]);
 
-const handleFormSubmitted = (index, newValue) => {
+const handleFormInput = (index, newValue) => {
   //get data from input in FormCard.vue & replace data in app
   scoreItems._value[index].scoreLength = newValue;
   formItems._value[index].manyItems = newValue;
+
+  if (scoreItems._value[index].score >= formItems._value[index].manyItems) {
+    scoreItems._value[index].score = 0;
+    formItems._value[index].manyItems = 0;
+    scoreItems._value[index].scoreLength = newValue;
+  }
+};
+
+const handleScoreIncrement = (index) => {
+  if (scoreItems._value[index].score < formItems._value[index].manyItems) {
+    return scoreItems._value[index].score++;
+  }
+  return scoreItems._value[index].score;
 };
 </script>
 
@@ -48,7 +63,8 @@ const handleFormSubmitted = (index, newValue) => {
                     <FormCardComponent
                       v-bind="item"
                       class="mb-4"
-                      @handleSubmit="handleFormSubmitted"
+                      @handleInput="handleFormInput"
+                      @handleIncrement="handleScoreIncrement"
                       :indexItem="index"
                     />
                   </div>

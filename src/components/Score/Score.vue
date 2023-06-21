@@ -1,28 +1,42 @@
 <script setup>
-defineProps({
+let data = defineProps({
   title: String,
   scoreLength: Number,
+  score: Number,
 });
+// import { ref } from "vue";
+// import { watch } from "vue";
+
+// const target = ref(data.score);
+// watch(target, (value) => {
+//   if (value) {
+//     target.value.classList.add("animate__animated", "animate__heartBeat");
+//     target.value.addEventListener("animationend", () => {
+//       target.value.classList.remove("animate__animated", "animate__heartBeat");
+//     });
+//   }
+// });
 </script>
 
 <template>
   <div class="score-item">
-    <span>{{ title }}</span>
+    <span>{{ data.title }}</span>
     <div
       class="score-wrapper border rounded-lg d-flex flex-column justify-content-between mb-2"
     >
       <div class="progress-wrapper">
         <b-progress
-          :value="1"
-          :max="scoreLength"
+          :value="data.score"
+          :max="data.scoreLength"
           variant="success"
         ></b-progress>
         <i
+          ref="target"
           class="bi bi-star-fill star animate__animated animate__heartBeat"
         ></i>
       </div>
       <div class="score">
-        <strong>1/{{ scoreLength }}</strong>
+        <strong>{{ data.score }}/{{ data.scoreLength }}</strong>
       </div>
     </div>
   </div>
